@@ -1,0 +1,18 @@
+Beecké preteky
+
+Vytvorte jednoduchı databázovı systém pre prácu s údajmi o beeckıch pretekoch, ktorı umoòuje: 
+  * zaradi pretekára, 
+  * vyradi pretekára, 
+  * vyh¾ada pretekára (skupinu pretekárov) pod¾a zadanıch kritérií, 
+  * zoradi pretekárov pod¾a zvoleného typu údaja (meno, krajina, dátum, èas). 
+Na konci èinnosti sa vytvorená databáza pretekárov uloí do súboru (ktorı bude obsahova fakty o jednotlivıch pretekároch). Systém umoní aj spätné naèítanie údajov zo súboru do prologovskej databázy.
+
+Údaje o pretekárovi musia obsahova minimálne: 
+  * meno 
+  * priezvisko 
+  * športovı oddiel 
+  * krajina 
+  * dátum pretekov (v tvare DD - MM - RR) 
+  * vısledok (èas v tvare HH : MM) 
+Kadı pretekár v databáze musí ma vyplnené minimálne meno a priezvisko.
+Riešte situáciu rovnakıch mien viacerách pretekárov. 
