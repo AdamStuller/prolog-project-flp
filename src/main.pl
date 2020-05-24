@@ -2,7 +2,12 @@
 :- op(600,xfy, : ).
 :- op(601,xfy,  - ).
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Poznamky:  
+% Databaza sa  nacitava hned na zaciaktu main.
+% Pri vkladani  atributov treba ich mena davat v uvodzovkach 
+%           (mal som problem so vzorovymi predikatmi na citanie atomov a tak 
+%            nacitavam udaje pomocou read).
 
 
 
@@ -11,7 +16,8 @@
 % Hlavny cyklus programu
 % main()
 
-main:-	        %uz pri spusteni moze nacitat databazu
+main:-	        
+    read_db('input_db.txt'),!,
 	repeat,
 	menu,
     get(C),
@@ -120,12 +126,13 @@ remove:-
     
 
 
-% Vrati najmensie nasledujuce id z pretekarov. V databaze uz nieco musi byt. Nakolko treba mat nejaky jedinecny atribut aby sme vedeli rozlisovat
-% medzi pretekarmi, pred vkladanim pretekarov !!!!treba mat aspon jedneho pretekara v databaze!!. 
+% Vrati najmensie nasledujuce id z pretekarov. 
 get_id(Id):-
     findall(Number, runner(_,_,_, _, _, _, Number), List),
     max_list(List, Max),
     Id is Max + 1.
+get_id(Id):-
+    Id is 0.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
