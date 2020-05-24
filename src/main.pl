@@ -26,34 +26,30 @@ main:-	        %uz pri spusteni moze nacitat databazu
 menu:-
 	nl,
 	writeln('1 - citanie zo suboru'),
-	writeln('2 << meno suboru >> - zapis do suboru'),
+	writeln('2 - zapis do suboru'),
     writeln('3 - vypis vsetkych pretekarov'),
-    writeln('4 - zoradit podla startovacieho cisla '),
-    writeln('5 - zoradit podla krajiny '),
-    writeln('6 - zoradit podla mena '),
-    writeln('7 - zoradit podla datumu '),
-    writeln('8 - zoradit podla casu '),
+    writeln('4 - zoradit podla'),
+    writeln('5 - vyhladat podla'),
+    writeln('6 - pridat pretekara'),
+    writeln('7 - vymazat pretekara'),
 	writeln('9 - koniec prace systemu'),
 	writeln('------------------------'),
 	nl.
-
-
-
-
-
-
 
 %%%
 % vykonanie vybranej moznosti
 % vykonaj(+Code)
 
-execute(49):-read_db('input_db.pl'),!.
+execute(49):-read_db('input_db.txt'),!.
 execute(50):-
-    nl,
-    read_atom(S),
+    writeln('Zadajte nazov suboru: '),
+    read(S),
     write_db(S),!. 
 execute(51):-show,!.
-execute(52):-sort_start_number,!.
+execute(52):-nl,sort_runners,!.
+execute(53):-nl,search_runners,!.
+execute(54):-nl,insert,!.
+execute(55):-nl,remove,!.
 execute(57):-!.
 execute(_):-writeln('Pouzivaj len urcene znaky!').
 
@@ -71,9 +67,6 @@ read_db(S):-
 	    fail
 	).
 
-write_db(''):-
-    !,
-    writeln('Zadajte aj nazov suboru').
 write_db(S):-
 	tell(S),
 	runner(Firstname,Lastname,Team, Country, Date, Result, Number),
@@ -84,65 +77,20 @@ write_db(S):-
 write_db(_):-told.
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sluzi na vypis
 % vypis()
 
 show:-
 	runner(Firstname,Lastname,Team, Country, Date, Result, Number),
-    format('Runner: ~s ~s, Start number: ~w, ~w, ~w. Race date: ~w, Result: ~w, ', [Firstname,Lastname, Number, Team, Country, Date, Result]),
+    format('~w: ~w ~w, ~w, ~w, start date: ~w, result: ~w\n', [Number, Firstname, Lastname, Team, Country, Date, Result]),
     nl,
 	fail.
 show.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Vlozit pretekara
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Pomocne predikaty - priklady
-% Predikat, ktory nacita string aj ked tam je velke zaciatocne pismeno
-% read_string(?String) argument je ale vhodnejsie pouzivat ako vystupny
-
-read_string(String):-
-	current_input(Input),
-	read_line_to_codes(Input,Codes),
-	string_codes(String,Codes).
-
-%%%
-% Predikat sa vykonava opakovane kym pouzivatel nezada korektne cislo
-% read_num(?Number) argument je velmi vhodne pouzivat len ako vystupny
-
-read_num(Num) :-
-	read_string(Str),
-	number_string(Num, Str), !.
-
-read_num(Num) :-
-	write('\tMusite zadat cislo: '),
-	read_num(Num).
-
-
-%%%
-% Konverzia retazca na atom
-% read_atom(?Atom)
-
-read_atom(A):-
-	read_string(Str),
-	atom_string(A,Str).
-
-%%%
-% Najde vsetky riesenia pre dany ciel
-% findall(+Template, :Goal, -Bag)
-% vrati zoznam Mien a Priezvisk pre vsetkych zakaznikov v databaze
-% findall(M^P , zakaznik(M,P,A,O), List).
-% findall(M-P-A>O,zakaznik(M,P,A,O),List).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Insert
+% Vlozit pretekara insert/0
 insert:-
     write('Zadajte meno pretekara: '),
     read(Firstname),
@@ -161,7 +109,7 @@ insert:-
     assertz(runner(Firstname, Lastname, Team, Country, Date, Result, Number)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Remove
+% Odstranit pretekara remove/0
 remove:-
     write('Zadajte  poradove cislo pretekara na vymazanie: '),
     read(Number),
@@ -172,7 +120,8 @@ remove:-
     
 
 
-% Get Id
+% Vrati najmensie nasledujuce id z pretekarov. V databaze uz nieco musi byt. Nakolko treba mat nejaky jedinecny atribut aby sme vedeli rozlisovat
+% medzi pretekarmi, pred vkladanim pretekarov !!!!treba mat aspon jedneho pretekara v databaze!!. 
 get_id(Id):-
     findall(Number, runner(_,_,_, _, _, _, Number), List),
     max_list(List, Max),
@@ -180,8 +129,17 @@ get_id(Id):-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Search by
+% Vyhladanie pretekara podla atributu
 
+% search_runners/0
+search_runners:-
+    writeln('Zadaj atribut : '),
+    read(Attr),
+    writeln('Zadaj hodnotu: '),
+    read(Value),
+    search_by(Attr, Value).
+
+% search_by(+Attr, +Value)
 search_by(Attr, Value):-
     Attr == 'Number',
     runner(F, L, T, C, D, R, Value),
@@ -196,11 +154,6 @@ search_by(Attr, Value):-
     Attr == 'Lastname',
     runner(F, Value, T, C, D, R, N),
     format('~w: ~w ~w, ~w, ~w, start date: ~w, result: ~w\n', [N, F, Value, T, C, D, R]), fail.
-
-search_by(Attr, Value):-
-    Attr == 'Team',
-    runner(F, L, Value, C, D, R, N),
-    format('~w: ~w ~w, ~w, ~w, start date: ~w, result: ~w\n', [N, F, L, Value, C, D, R]), fail.
 
 search_by(Attr, Value):-
     Attr == 'Team',
@@ -223,15 +176,24 @@ search_by(Attr, Value):-
     format('~w: ~w ~w, ~w, ~w, start date: ~w, result: ~w\n', [N, F, L, T,  C, D, Value]), fail.
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Sort by start number
+% Triedenie pretekarov podla atributu
+
+% sort_runners/0
+sort_runners:-
+    writeln('Zadajte atribut: '),
+    read(Attr),
+    sort_by(Attr).
+
+
+% sort_by(+Attr)
 sort_by(Attr):-
     Attr == 'Number',
     findall(Number , runner(_,_,_, _, _, _, Number), List),
     sort(0, @=<, List, Sorted),
     vypis(Sorted).
 
-% Sort by First name
 sort_by(Attr):-
     Attr == 'Firstname',
     findall(Firstname-Number , runner(Firstname,_,_, _, _, _, Number), List),
@@ -239,7 +201,6 @@ sort_by(Attr):-
     pairs_values(Pairs, Sorted),
     vypis(Sorted).
 
-%Sort by Lastname
 sort_by(Attr):-
     Attr == 'Lastname',
     findall(Lastname-Number , runner(_,Lastname,_, _, _, _, Number), List),
