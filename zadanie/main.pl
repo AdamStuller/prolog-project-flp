@@ -8,7 +8,8 @@
 %%%
 % zadefinujeme operatory - len priklad
 
-:- op(600,xfy,::).
+:- op(600,xfy,:).
+:- op(601,xfy, -).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -65,7 +66,7 @@ citaj(S):-
 	).
 
 %%%
-% Sluzi na zapis textoveho suboru.
+% Sluzi na zapis textoveho suboru
 % zapis(+Subor)
 
 zapis(S):-

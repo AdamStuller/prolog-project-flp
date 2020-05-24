@@ -1,18 +1,18 @@
-Beecké preteky
+Beï¿½eckï¿½ preteky
 
-Vytvorte jednoduchı databázovı systém pre prácu s údajmi o beeckıch pretekoch, ktorı umoòuje: 
-  * zaradi pretekára, 
-  * vyradi pretekára, 
-  * vyh¾ada pretekára (skupinu pretekárov) pod¾a zadanıch kritérií, 
-  * zoradi pretekárov pod¾a zvoleného typu údaja (meno, krajina, dátum, èas). 
-Na konci èinnosti sa vytvorená databáza pretekárov uloí do súboru (ktorı bude obsahova fakty o jednotlivıch pretekároch). Systém umoní aj spätné naèítanie údajov zo súboru do prologovskej databázy.
+Vytvorte jednoduchï¿½ databï¿½zovï¿½ systï¿½m pre prï¿½cu s ï¿½dajmi o beï¿½eckï¿½ch pretekoch, ktorï¿½ umoï¿½ï¿½uje: 
+  * zaradiï¿½ pretekï¿½ra, 
+  * vyradiï¿½ pretekï¿½ra, 
+  * vyhï¿½adaï¿½ pretekï¿½ra (skupinu pretekï¿½rov) podï¿½a zadanï¿½ch kritï¿½riï¿½, 
+  * zoradiï¿½ pretekï¿½rov podï¿½a zvolenï¿½ho typu ï¿½daja (meno, krajina, dï¿½tum, ï¿½as). 
+Na konci ï¿½innosti sa vytvorenï¿½ databï¿½za pretekï¿½rov uloï¿½ï¿½ do sï¿½boru (ktorï¿½ bude obsahovaï¿½ fakty o jednotlivï¿½ch pretekï¿½roch). Systï¿½m umoï¿½nï¿½ aj spï¿½tnï¿½ naï¿½ï¿½tanie ï¿½dajov zo sï¿½boru do prologovskej databï¿½zy.
 
-Údaje o pretekárovi musia obsahova minimálne: 
+ï¿½daje o pretekï¿½rovi musia obsahovaï¿½ minimï¿½lne: 
   * meno 
   * priezvisko 
-  * športovı oddiel 
+  * ï¿½portovï¿½ oddiel 
   * krajina 
-  * dátum pretekov (v tvare DD - MM - RR) 
-  * vısledok (èas v tvare HH : MM) 
-Kadı pretekár v databáze musí ma vyplnené minimálne meno a priezvisko.
-Riešte situáciu rovnakıch mien viacerách pretekárov. 
+  * dï¿½tum pretekov (v tvare DD - MM - RR) 
+  * vï¿½sledok (ï¿½as v tvare HH : MM) 
+Kaï¿½dï¿½ pretekï¿½r v databï¿½ze musï¿½ maï¿½ vyplnenï¿½ minimï¿½lne meno a priezvisko.
+Rieï¿½te situï¿½ciu rovnakï¿½ch mien viacerï¿½ch pretekï¿½rov. 
